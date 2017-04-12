@@ -1,7 +1,12 @@
 package com.rest.controller;
 
+import javax.validation.ConstraintViolationException;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.rest.config.UrlMapping;
 import com.rest.domain.Todo;
 import com.rest.service.TodoService;
+import com.rest.validator.ProcessValidator;
 
 @RestController
 @RequestMapping(UrlMapping.TODO_CONTROLLER)
@@ -30,8 +36,15 @@ public class TodoController {
 	}
 
 	@RequestMapping(value = UrlMapping.TODO_CONTROLLER_SAVE, method = RequestMethod.POST)
-	public ResponseEntity<?> save(@RequestBody Todo todo) {
-		return todoService.save(todo);
+	public ResponseEntity<?> save(@Valid @RequestBody Todo todo, Errors errors) {
+		try {
+			return todoService.save(todo);
+		} catch (ConstraintViolationException e) {
+			return new ResponseEntity<>(
+					ProcessValidator.getErrorsPaire(errors),
+					HttpStatus.BAD_REQUEST);
+		}
+
 	}
 
 	@RequestMapping(value = UrlMapping.TODO_CONTROLLER_UPDATE, method = RequestMethod.PUT)
