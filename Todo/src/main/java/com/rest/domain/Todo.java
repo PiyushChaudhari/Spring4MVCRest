@@ -20,7 +20,7 @@ public class Todo extends BaseDomain implements Serializable {
 	@NotNull(message = "{com.rest.domain.Todo.name.NotNull}")
 	@NotEmpty(message = "{com.rest.domain.Todo.name.NotEmpty}")
 	@NotBlank(message = "{com.rest.domain.Todo.name.NotBlank}")
-	@Size(min = 2, max = 5,message = "{com.rest.domain.Todo.name.size.notMatch}")
+	@Size(min = 1, max = 10,message = "{com.rest.domain.Todo.name.size.notMatch}")
 	private String name;
 
 	public String getName() {
