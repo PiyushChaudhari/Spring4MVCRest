@@ -2,11 +2,14 @@ package com.rest.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -14,6 +17,8 @@ import com.rest.base.presistance.BaseDomain;
 
 @Entity
 @Table(name = "todo")
+@Cacheable
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 public class Todo extends BaseDomain implements Serializable {
 
 	private static final long serialVersionUID = 1L;

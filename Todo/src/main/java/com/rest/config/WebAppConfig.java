@@ -36,8 +36,12 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
 	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+	private static final String PROPERTY_NAME_HIBERNATE_GENERATE_STATISTICS = "hibernate.generate_statistics";
 	private static final String PROPERTY_NAME_HIBERNATE_DB_STATE = "hibernate.hbm2ddl.auto";
 	private static final String PROPERTY_NAME_HIBERNATE_ENABLE_LAZY_LOAD_NO_TRANS = "hibernate.enable_lazy_load_no_trans";
+	private static final String PROPERTY_NAME_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = "hibernate.cache.use_second_level_cache";
+	private static final String PROPERTY_NAME_HIBERNATE_CACHE_USE_QUERY_CACHE = "hibernate.cache.use_query_cache";
+	private static final String PROPERTY_NAME_HIBERNATE_CACHE_REGION_FACTORY_CLASS = "hibernate.cache.region.factory_class";
 
 	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
 	@Resource
@@ -77,11 +81,24 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
 		properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL,
 				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
+		properties
+				.put(PROPERTY_NAME_HIBERNATE_GENERATE_STATISTICS,
+						env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_GENERATE_STATISTICS));
 		properties.put(PROPERTY_NAME_HIBERNATE_DB_STATE,
 				env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DB_STATE));
 		properties
 				.put(PROPERTY_NAME_HIBERNATE_ENABLE_LAZY_LOAD_NO_TRANS,
 						env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_ENABLE_LAZY_LOAD_NO_TRANS));
+
+		properties
+				.put(PROPERTY_NAME_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE,
+						env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
+		// properties
+		// .put(PROPERTY_NAME_HIBERNATE_CACHE_USE_QUERY_CACHE,
+		// env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_CACHE_USE_QUERY_CACHE));
+		properties
+				.put(PROPERTY_NAME_HIBERNATE_CACHE_REGION_FACTORY_CLASS,
+						env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_CACHE_REGION_FACTORY_CLASS));
 
 		return properties;
 	}
