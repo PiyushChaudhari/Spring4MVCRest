@@ -15,7 +15,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rest.base.presistance.BaseDomain;
 
 @Entity
@@ -50,9 +50,9 @@ public class User extends BaseDomain implements Serializable {
 	@NotBlank(message = "{com.rest.domain.User.password.NotBlank}")
 	private String password;
 
-	@JsonBackReference
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@Column(nullable = true)
+	@JsonManagedReference
 	private Set<Todo> todoList;
 
 	public String getFirstName() {

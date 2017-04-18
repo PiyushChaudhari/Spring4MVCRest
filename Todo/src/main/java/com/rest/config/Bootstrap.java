@@ -51,10 +51,10 @@ public class Bootstrap implements ApplicationListener<ApplicationEvent> {
 				+ applicationStarted);
 		if (applicationEvent instanceof ContextStartedEvent) {
 			LOGGER.info("================================= ContextStartedEvent ===============================");
-			// this.init();
+			this.init();
 		} else if (applicationEvent instanceof ContextRefreshedEvent) {
 			LOGGER.info("================================= ContextRefreshedEvent ===============================");
-			// this.init();
+			this.init();
 		} else if (applicationEvent instanceof RequestHandledEvent) {
 			LOGGER.info("================================= RequestHandledEvent ===============================");
 		} else if (applicationEvent instanceof ContextClosedEvent) {
@@ -67,25 +67,7 @@ public class Bootstrap implements ApplicationListener<ApplicationEvent> {
 	public void init() {
 		if (applicationStarted == Boolean.FALSE) {
 
-			// User user = new User();
-			// user.setFirstName("Piyush");
-			// user.setLastName("Chaudhari");
-			// user.setEmail("piyu1812@yahoo.co.in");
-			// user.setPassword("111111111");
-
-			// String id = userDao.save(user);;
-			// User loadUser = userDao.save(user);
-			// System.out.println(loadUser);
-			//
-			// Todo todo = new Todo();
-			// todo.setName("1 todo");
-			// todo.setUser(loadUser);
-			// Set<Todo> todoList = new HashSet<Todo>();
-			// todoList.add(todo);
-			// user.setTodoList(todoList);
-			// todoDao.save(todo);
-
-			for (Integer i = 1; i <= 50; i++) {
+			for (Integer i = 1; i <= 5; i++) {
 
 				User user = new User();
 				user.setFirstName("Piyush " + i.toString());
@@ -93,16 +75,20 @@ public class Bootstrap implements ApplicationListener<ApplicationEvent> {
 				user.setEmail("piyu" + i.toString() + "@gmail.com");
 				user.setPassword("111111111");
 
-				for (Integer j = i; j <= 5000; j++) {
+				Set<Todo> todoList = new HashSet<Todo>();
+
+				for (Integer j = i; j <= 100; j++) {
+
 					Todo todo = new Todo();
-					todo.setName("Todo " + j.toString());
+					todo.setName(i.toString() + " Todo " + j.toString());
 					todo.setUser(user);
-					Set<Todo> todoList = new HashSet<Todo>();
 					todoList.add(todo);
-					user.setTodoList(todoList);
-					todoDao.save(todo);
+					// user.setTodoList(todoList);
+					// userDao.save(user);
 				}
 
+				user.setTodoList(todoList);
+				userDao.save(user);
 			}
 
 			LOGGER.info("================================= Data Populate ===============================");

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,13 +14,15 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.rest.base.presistance.BaseDomain;
 
 @Entity
 @Table(name = "todo")
 // @Cacheable
 // @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Todo extends BaseDomain implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -29,9 +32,9 @@ public class Todo extends BaseDomain implements Serializable {
 	@Size(min = 1, max = 15, message = "{com.rest.domain.Todo.name.size.notMatch}")
 	private String name;
 
-	@JsonManagedReference
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(nullable = false)
+	@JsonBackReference
 	private User user;
 
 	public String getName() {
