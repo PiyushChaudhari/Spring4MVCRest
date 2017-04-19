@@ -4,6 +4,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
 
+import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -15,17 +16,20 @@ import com.rest.enums.EnvironmentType;
 public class Initializer implements WebApplicationInitializer {
 
 	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
+	public void onStartup(ServletContext servletContext)
+			throws ServletException {
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
-		servletContext.setInitParameter("spring.profiles.active", EnvironmentType.DEVELOPMENT.toString());
+		servletContext.setInitParameter(
+				AbstractEnvironment.ACTIVE_PROFILES_PROPERTY_NAME,
+				EnvironmentType.DEVELOPMENT.toString());
 		ctx.register(WebAppConfig.class);
 		servletContext.addListener(new ContextLoaderListener(ctx));
 		ctx.setServletContext(servletContext);
-		Dynamic servlet = servletContext.addServlet("dispatcher", new DispatcherServlet(ctx));
+		Dynamic servlet = servletContext.addServlet("dispatcher",
+				new DispatcherServlet(ctx));
 		servlet.addMapping("/");
 		servlet.setLoadOnStartup(1);
-        
-		
+
 	}
 
 }

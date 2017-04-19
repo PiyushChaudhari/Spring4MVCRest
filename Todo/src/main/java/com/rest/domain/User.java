@@ -15,11 +15,13 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.rest.base.presistance.BaseDomain;
 
 @Entity
 @Table(name = "User")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class User extends BaseDomain implements Serializable {
 
 	/**
@@ -52,7 +54,7 @@ public class User extends BaseDomain implements Serializable {
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@Column(nullable = true)
-	@JsonManagedReference
+	@JsonBackReference
 	private Set<Todo> todoList;
 
 	public String getFirstName() {

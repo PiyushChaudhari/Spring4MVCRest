@@ -47,8 +47,6 @@ public class Bootstrap implements ApplicationListener<ApplicationEvent> {
 	@Override
 	public void onApplicationEvent(ApplicationEvent applicationEvent) {
 
-		LOGGER.info("================================= applicationStarted =============================== "
-				+ applicationStarted);
 		if (applicationEvent instanceof ContextStartedEvent) {
 			LOGGER.info("================================= ContextStartedEvent ===============================");
 			this.init();

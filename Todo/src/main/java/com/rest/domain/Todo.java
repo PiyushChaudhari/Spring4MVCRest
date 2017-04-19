@@ -14,8 +14,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rest.base.presistance.BaseDomain;
 
 @Entity
@@ -33,8 +33,8 @@ public class Todo extends BaseDomain implements Serializable {
 	private String name;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(nullable = false)
-	@JsonBackReference
+	@JoinColumn(nullable = false)	
+	@JsonManagedReference
 	private User user;
 
 	public String getName() {
